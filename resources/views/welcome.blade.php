@@ -501,7 +501,7 @@
         </div>
     </nav>
 
-<!-- Hero Section -->
+<!-- Hero Section --> Mejoras realizadas por Rodrigo Araujo Puma
 <section class="hero" id="inicio"
     style="
         min-height: 420px;
