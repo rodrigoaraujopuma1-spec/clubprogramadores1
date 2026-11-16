@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Usuario;
 use App\Models\Evento;
 use App\Models\Proyecto;
@@ -14,11 +15,20 @@ class ClubController extends Controller
     {
         // Obtener datos de la base de datos
         $miembros = Usuario::with('rol')->get();
-        $eventos = Evento::orderBy('fecha_inicio', 'asc')->take(3)->get();
-        $proyectos = Proyecto::with('creador', 'equipo')->take(3)->get();
 
-        // Pasar datos a la vista
-        return view('welcome', compact('miembros', 'eventos', 'proyectos'));
+        $eventos = Evento::orderBy('fecha_inicio', 'asc')
+            ->take(3)
+            ->get();
+
+        $proyectos = Proyecto::with('creador', 'equipo')
+            ->take(3)
+            ->get();
+
+        return view('welcome', compact(
+            'miembros',
+            'eventos',
+            'proyectos'
+        ));
     }
 
     public function guardarContacto(Request $request)
@@ -31,15 +41,21 @@ class ClubController extends Controller
             'mensaje' => 'required|max:255'
         ]);
 
-        // Guardar en la base de datos
+        // Obtener el usuario autenticado, si existe
+       $usuarioId = Auth::id();
+
+        // Guardar solicitud
         Contacto::create([
             'Nombre' => $request->nombre,
             'correo' => $request->email,
             'Asunto' => $request->tecnologias ?? 'Sin especificar',
             'Mensaje' => $request->mensaje,
-            'us_id' => 1 // Por ahora usamos ID 1, luego lo conectamos con autenticación
+            'us_id' => $usuarioId
         ]);
 
-        return redirect()->back()->with('success', '¡Solicitud enviada correctamente!');
+        return redirect()->back()->with(
+            'success',
+            '¡Solicitud enviada correctamente! Pronto nos comunicaremos contigo.'
+        );
     }
 }

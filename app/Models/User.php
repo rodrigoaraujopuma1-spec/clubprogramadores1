@@ -11,6 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'usuario';
+
     protected $primaryKey = 'us_id';
 
     protected $fillable = [
@@ -35,5 +36,11 @@ class User extends Authenticatable
     public function rol()
     {
         return $this->belongsTo(Rol::class, 'rol_id', 'rol_id');
+    }
+
+    // Verificar si el usuario es administrador
+    public function esAdministrador(): bool
+    {
+        return (int) $this->rol_id === 1;
     }
 }

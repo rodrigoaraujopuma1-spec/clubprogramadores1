@@ -336,40 +336,47 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
+.project-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
         .project-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 50px rgba(0, 212, 255, 0.3);
         }
 
-        .project-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #7b2ff7 0%, #00d4ff 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-        }
+       .project-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+}
 
-        .project-content {
-            padding: 1.5rem;
-        }
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.project-content {
+    padding: 25px;
+    margin-top: 0;
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+}
 
-        .project-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
+.project-content h3 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
         .project-content p {
             color: #b8b8d1;
             margin-bottom: 1rem;
@@ -458,7 +465,11 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">{'<DevClub/>'}</div>
+            <div class="logo">
+    <img src="/images/imagen.jpg"
+         alt="Universidad Peruana Unión"
+         style="width: 75px; height: 47px; object-fit: contain;">
+</div>
             <div class="nav-links">
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
@@ -490,35 +501,89 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="inicio">
-        <div class="hero-content">
-            <h1>Bienvenido a DevClub</h1>
-            <p>Donde los programadores se conectan, aprenden y crean juntos. Únete a nuestra comunidad y lleva tus habilidades al siguiente nivel.</p>
-            <a href="#contacto" class="btn btn-primary">Únete Ahora</a>
-        </div>
-    </section>
+<!-- Hero Section -->
+<section class="hero" id="inicio"
+    style="
+        min-height: 420px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image:
+            linear-gradient(rgba(5, 15, 40, 0.60), rgba(5, 15, 40, 0.70)),
+            url('/images/Campus_juliaca_2026-jpg.webp');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 15px;
+        color: white;
+    ">
 
-    <!-- Members Section -->
-    <section id="miembros">
-        <h2 class="section-title">Nuestros Miembros</h2>
-        <div class="members-grid">
-            @foreach($miembros as $miembro)
-            <div class="member-card">
-                <div class="member-avatar">
-                    {{ strtoupper(substr($miembro->us_nombre, 0, 1) . substr($miembro->us_apellido, 0, 1)) }}
-                </div>
-                <h3 class="member-name">{{ $miembro->us_nombre }} {{ $miembro->us_apellido }}</h3>
-                <p class="member-role">{{ $miembro->rol->us_nombre ?? 'Miembro' }}</p>
-                <div class="member-tech">
-                    <span class="tech-badge">Laravel</span>
-                    <span class="tech-badge">PHP</span>
-                    <span class="tech-badge">MySQL</span>
-                </div>
+    <div class="hero-content">
+        <h1>Bienvenidos a DevClub UPeU</h1>
+
+        <a href="#contacto" class="btn btn-primary">
+            Únete Ahora
+        </a>
+    </div>
+
+</section>
+
+<!-- Descripción debajo de la imagen -->
+<div style="
+    text-align: center;
+    max-width: 950px;
+    margin: 35px auto 50px;
+    padding: 0 20px;
+">
+    <p style="
+        color: white;
+        font-size: 22px;
+        line-height: 1.7;
+    ">
+        Un espacio donde los estudiantes de la Universidad Peruana Unión
+        se conectan, aprenden y desarrollan proyectos tecnológicos juntos.
+    </p>
+</div>
+
+<section id="miembros">
+    <h2 class="section-title">Nuestros Miembros</h2>
+
+    <div class="members-grid">
+        @foreach($miembros as $miembro)
+
+        <div class="member-card"
+             style="
+                background-image:
+                    linear-gradient(rgba(5, 15, 40, 0.65), rgba(5, 15, 40, 0.75)),
+                    url('/images/miembros.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+             ">
+
+            <div class="member-avatar">
+                {{ strtoupper(substr($miembro->us_nombre, 0, 1) . substr($miembro->us_apellido, 0, 1)) }}
             </div>
-            @endforeach
+
+            <h3 class="member-name">
+                {{ $miembro->us_nombre }} {{ $miembro->us_apellido }}
+            </h3>
+
+            <p class="member-role">
+                {{ $miembro->rol->us_nombre ?? 'Miembro' }}
+            </p>
+
+            <div class="member-tech">
+                <span class="tech-badge">Laravel</span>
+                <span class="tech-badge">PHP</span>
+                <span class="tech-badge">MySQL</span>
+            </div>
+
         </div>
-    </section>
+        @endforeach
+    </div>
+</section>
+```
 
     <!-- Events Section -->
     <section id="eventos">
@@ -546,7 +611,10 @@
         <div class="projects-grid">
             @foreach($proyectos as $proyecto)
             <div class="project-card">
-                <div class="project-image">🚀</div>
+                <div class="project-image">
+    <img src="{{ asset('images/img.jpg2.jpeg') }}"
+         alt="Proyecto DevClub UPeU">
+</div>
                 <div class="project-content">
                     <h3>{{ $proyecto->us_nombre }}</h3>
                     <p>{{ $proyecto->descripcion }}</p>
@@ -609,7 +677,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 DevClub - Club de Programadores. Construyendo el futuro juntos.</p>
+        <p>&copy; 2026 DevClub - Club de Programadores. Construyendo el futuro juntos.</p>
     </footer>
 </body>
 </html>
